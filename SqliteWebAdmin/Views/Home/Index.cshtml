@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>SqliteWebAdmin</title>
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap.min.css")" >				
+    <link rel="stylesheet" href="@Url.Content("~/Content/bootstrap-responsive.min.css")" >
+</head>
+<body>        
+	<section class="container-fluid">
+		<header class="page-header">
+			<section class="input-prepend pull-right">
+                <span class="add-on"><i class="icon-folder-open"></i> Database</span><input autofocus
+                    name="file" type="text" placeholder="Select File" class="span10" data-bind="value: file"/>
+            </section> 
+		    <h1>SQLite Admin</h1>                    			
+		</header>					
+        <section class="row-fluid" data-bind="visible: file() !== undefined">
+            <nav class="span2">
+                <ul class="nav nav-list well">    
+                    <li class="nav-header">Tables</li>
+                <!-- ko foreach: tables -->
+                    <li data-bind="css: { active: $data == $root.table() }"><a href="#" data-bind="click: $parent.queryTable"><i class="icon-th-list"></i> <span data-bind="text: $data"></span></a></li>
+                <!-- /ko -->
+                </ul>
+            </nav>
+            <section class="span10">
+                <nav class="btn-group" data-bind="visible: table() !== undefined">
+                    <a href="#" class="btn" data-bind="click: tableSchema"><i class="icon-file"></i> Schema</a>  
+                    <a href="#" class="btn" data-bind="click: browseTable"><i class="icon-play-circle"></i> Browse</a>
+                </nav>
+                <br />
+                <div class="control-groups">
+                    <textarea name="sql" rows="2" cols="100" placeholder="Query" data-bind="value: sql" style="width:99%"></textarea>
+                    <button class="btn" data-bind="click: query"><i class="icon-play"></i> Query</button>
+                </div>
+                <br />
+                <div class="alert" data-bind="visible: message() !== undefined">
+                    <button class="close" data-bind="click: empty">×</button>
+                    <span data-bind="text: message"></span>
+                </div>
+                <section style="overflow:auto">
+                    <table class="table table-bordered table-striped" data-bind="visible: cols().length > 0">
+                        <thead>
+                            <tr data-bind="foreach: cols">
+                                <th data-bind="text: $data"></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach: rows">
+                            <tr data-bind="foreach: $data">
+                                <td data-bind="text: $data"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </section>
+        </section>
+        <footer>2012&copy;Anton Heryanto</footer>
+    </section>
+    <script src="@Url.Content("~/Scripts/jquery-1.8.0.min.js")"></script>       
+    <script src="@Url.Content("~/Scripts/knockout-2.1.0.js")"></script>
+    <script src="@Url.Content("~/Scripts/viewmodel.js")"></script>    
+</body>
+</html>
